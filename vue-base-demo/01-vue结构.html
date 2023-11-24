@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue结构</title>
+    <!--Vue组件导入-->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+</head>
+
+<body>
+<!--指定容器名为app-->
+<div id="app">
+    <!--插值表达式-->
+    <h1>字符串: {{ name }}</h1>
+
+    <a href="#">年龄: {{ age * 2 }}</a>
+
+    <p>{{ friend.name }}</p>
+    <p>{{ friend.age }}</p>
+</div>
+
+
+<script>
+    const app = new Vue({
+        // el配置CSS选择器,表示Vue管理的标签范围
+        el: "#app",
+        // data提供数据
+        data: {
+            name: "root",
+            age: 18,
+            hobbies: ["吃饭", "睡觉", "打游戏", "写代码"],
+            friend: {
+                name: "admin",
+                age: 24,
+
+            }
+
+        }
+    });
+
+</script>
+</body>
+</html>

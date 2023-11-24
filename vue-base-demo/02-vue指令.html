@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue指令</title>
+    <!--Vue组件导入-->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+
+    <style>
+        .box {
+            height: 200px;
+            width: 200px;
+            border: black solid;
+        }
+
+        .btn {
+            height: 50px;
+            width: 100px;
+        }
+    </style>
+</head>
+
+<body>
+<div id="app">
+    <!--v-vue-base-demo:相当于innerHTML,能够解析字符串中的标签-->
+    <div v-html="tag"></div>
+
+    <!--v-if和v-show的区别，v-show适用于频繁切换的场景，v-if可以避免资源的创建-->
+    <div v-show="flag" class="box">这是 v-show</div>
+    <div v-if="flag" class="box">这是 v-if</div>
+
+    <!--v-if和v-else搭配使用，形成逻辑判断-->
+    <p v-if="rate > 90">红楼梦</p>
+    <p v-else-if="rate > 80">三国演义</p>
+    <p v-else-if="rate > 70">水浒传</p>
+    <p v-else>西游记</p>
+
+    <!--事件监听-->
+    <!--只有写在methods中的方法，才能够只通过方法名进行调用，但是这样写不能够传递参数-->
+    <button v-on:click="decr">-</button>
+    <span>{{ num }}</span>
+    <!--既可以使用函数，也可以直接将逻辑写在其中。
+    @是v-on:的简写，dblclick是双击事件-->
+    <button @dblclick="num += 1">+</button>
+    <!--v-on调用函数时进行参数传递-->
+    <div>
+        <button @click="print('参数传递测试')" class="btn">参数传递按钮</button>
+    </div>
+
+    <!--v-bind: 对标签属性的动态赋值，相当于插值表达式，直接使用:是作为v-bind:的简写-->
+    <a v-bind:href="url" :title="title">跳转链接</a>
+
+    <div class="box">
+        <button v-bind:disabled="index <= 0" @click="index--">上一页</button>
+        <!--插值表达式和指令中都是可以嵌套的使用变量的，JavaScript可以怎么写这里面就可以怎么写-->
+        <a v-bind:href="links[index]">跳转{{ names[index] }}</a>
+        <button v-bind:disabled="index >= links.length-1" @click="index++">下一页</button>
+    </div>
+
+    <!--v-for是全部渲染到页面中，注意和轮播图进行区别
+    v-for如果不指定key，那么实际上并不是真正的删除，而是修改复用，原来标签的样式会被继承
+    -->
+    <div>
+        <ul>
+            <li v-for="(item, i) in books" v-bind:key="i">
+                <span>序号：{{ i }}</span>
+                <span>书名：《{{ item.title }}》</span>
+                <span>作者：{{ item.author }}</span>
+                <button @click="del(i)">删除</button>
+            </li>
+        </ul>
+    </div>
+
+    <div>
+        用户名：<input type="text" v-model:value="username"><br>
+        密码：<input type="password" v-model:value="password"><br>
+        <button>提交</button>
+    </div>
+
+</div>
+
+
+<script>
+    // 这里本质上还是JavaScript，只是可以在Vue对象里面进行Vue相关的配置
+    const app = new Vue({
+        el: "#app",
+        data: {
+            tag: `<a href="https://www.baidu.com">跳转百度</a>`,
+            flag: true,
+            rate: 60,
+            num: 100,
+            url: "https://www.baidu.com",
+            title: "通过v-bind动态设置标签属性",
+
+            index: 0,
+            links: [
+                "http://www.baidu.com",
+                "http://www.taobao.com",
+                "http://www.jd.com",
+            ],
+            names: ["百度", "淘宝", "京东"],
+
+            books: [
+                {title: "红楼梦", author: "曹雪芹"},
+                {title: "三国演义", author: "罗贯中"},
+                {title: "西游记", author: "吴承恩"},
+                {title: "水浒传", author: "施耐庵"},
+            ],
+
+            username: null,
+            password: null,
+        },
+        methods: {
+            decr() {
+                // 这里是JavaScript中的语法，app是一个对象，而app.num直接定位到这个对象中data的num字段
+                // app.num -= 1;
+                // Vue提供的this？
+                this.num -= 1;
+            },
+            print(msg) {
+                alert(msg);
+            },
+
+            del(i) {
+                // 使用filter得到一个新的数组，进行重新赋值
+                // id是遍历的索引
+                this.books = this.books.filter((book, id) => i !== id);
+            }
+        }
+    });
+
+    // 这里还是可以使用JavaScript的WebAPIs
+    const element = document.querySelector("#app");
+
+</script>
+</body>
+</html>
