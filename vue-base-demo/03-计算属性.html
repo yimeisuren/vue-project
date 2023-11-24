@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue指令修饰符</title>
+    <!--Vue组件导入-->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+
+    <style>
+        .box {
+            height: 200px;
+            width: 200px;
+            border: black solid;
+        }
+
+        .btn {
+            height: 50px;
+            width: 100px;
+        }
+    </style>
+</head>
+
+<body>
+<div id="app">
+
+</div>
+
+
+<script>
+    // 这里本质上还是JavaScript，只是可以在Vue对象里面进行Vue相关的配置
+    const app = new Vue({
+        el: "#app",
+        data: {},
+        methods: {},
+        computed: {
+            // 计算属性，声明和函数相同（添加括号），使用和属性相同（不添加括号）
+        }
+    });
+
+
+    // 这里还是可以使用JavaScript的WebAPIs
+    const element = document.querySelector("#app");
+
+</script>
+</body>
+</html>

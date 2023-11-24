@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>导航栏高亮</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+    <style>
+        .active {
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+<div id="app">
+    <div>
+        <ul>
+            <!--
+            特殊用法：使用v-bind对class属性进行动态赋值
+            由于v-for是动态生成的，因此active如果直接设置的效果要么是全部都不是active，要么全部都是active。下面方式可以解决这个问题
+            当然，这应该不是唯一的解法。猜测：可以设置默认全都不是active，在页面加载完成后，给activeIdx对应的追加active的样式，目前还没有实操
+            -->
+            <li v-for="(item, index) in list"
+                v-bind:class="{active: index === activeIdx}"
+                @click="activeIdx = index"
+            >
+                {{item}}
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+<script>
+    const app = new Vue({
+        el: "#app",
+        data: {
+            activeIdx: 0,
+            list: ["京东秒杀", "今日特价", "限时抢购"]
+        },
+        methods: {}
+    });
+</script>
+</body>
+</html>

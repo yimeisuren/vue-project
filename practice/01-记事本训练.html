@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>记事本训练</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <div>
+        <!--使用.进行Vue指令的修饰符，@keyup是监听所有按键弹起事件，而使用.enter之后限制只监听enter，简化了代码-->
+        <input type="text" v-model="task" placeholder="请输入任务"
+               v-on:focus="showTask()"
+               v-on:blur="hiddenTask()"
+               @keyup.enter="addTask()"
+        >
+        <button @click="addTask()">添加任务</button>
+    </div>
+    <div>
+        <ul>
+            <li v-for="(task, index) in todoList" v-show="isShow">
+                <span>{{index}}</span> : <label>{{task}}</label>
+
+            </li>
+        </ul>
+        <span v-show="isShow">总计：{{todoList.length}}</span>
+    </div>
+</div>
+
+
+<script>
+    const app = new Vue({
+        el: "#app",
+        data: {
+            todoList: [],
+            task: null,
+            isShow: false,
+
+        },
+        methods: {
+            addTask() {
+                // 进行一些简单的校验
+                if (this.task.trim() === '') {
+                    alert("任务不能为空");
+                    return;
+                }
+                // push：添加到数组最后面
+                // unshift：添加到数组最前面
+                this.todoList.unshift(this.task);
+                // TODO: 这里应该将光标重新设置到input输入框中
+                this.task = '';
+            },
+            //输入框获取光标后，展示任务列表
+            showTask() {
+                this.isShow = true;
+            },
+            hiddenTask() {
+                this.isShow = false;
+            }
+        }
+    });
+</script>
+</body>
+</html>

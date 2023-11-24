@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>表单训练</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+    <style>
+        .active {
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+<div id="app">
+    <!--
+    表单总结：
+    1. 无论是哪种类型的表单，表单对应的值都是通过value来获取的
+    2. 表单绑定属性时，是绑定到某个Vue定义的变量上，而不是绑定到value中，value只是文本的数值格式，是不可变的
+    -->
+    <div>
+        <!--输入框-->
+        昵称：<input v-model="nickname" type="text" placeholder="请输入昵称">
+        <br><br>
+
+        <!--多选一：使用name属性将多个input输入框合并到同一个分组-->
+        性别：
+        <input v-model="sex" type="radio" name="gender" value="1">男
+        <input v-model="sex" type="radio" name="gender" value="0">女
+        <br><br>
+
+        <!--下拉框-->
+        居住：
+        <select v-model="cityId">
+            <option value="0">北京</option>
+            <option value="1">上海</option>
+            <option value="2">深圳</option>
+            <option value="3">广州</option>
+        </select>
+        <br><br>
+
+        <!--复选框-->
+        爱好：
+        <span v-for="(item, index) in hobbies">
+            <input type="checkbox" v-bind:value="index">{{item}}
+        </span>
+        <br><br>
+
+        <!--文本框-->
+        自我描述：<br><br>
+        <textarea cols="30" rows="10" v-model="description"></textarea>
+
+    </div>
+</div>
+
+
+<script>
+    const app = new Vue({
+        el: "#app",
+        data: {
+            nickname: '',
+            sex: '0',
+            cityId: '1',
+            hobbies: ["吃饭", "睡觉", "打游戏", "写代码"],
+            description: ''
+
+        },
+        methods: {}
+    });
+</script>
+</body>
+</html>

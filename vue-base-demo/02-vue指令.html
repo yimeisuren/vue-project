@@ -71,10 +71,12 @@
         </ul>
     </div>
 
+    <!--指令修饰符-->
     <div>
         用户名：<input type="text" v-model:value="username"><br>
-        密码：<input type="password" v-model:value="password"><br>
-        <button>提交</button>
+        密码：<input type="password" v-model:value="password" @keyup.enter="submit()"><br>
+        <button @click="sumbit()">提交</button>
+        <button @click="reset()">重置</button>
     </div>
 
 </div>
@@ -125,9 +127,19 @@
                 // 使用filter得到一个新的数组，进行重新赋值
                 // id是遍历的索引
                 this.books = this.books.filter((book, id) => i !== id);
+            },
+
+            submit() {
+                console.log("表单提交");
+            },
+
+            reset() {
+                this.username = '';
+                this.password = '';
             }
         }
     });
+
 
     // 这里还是可以使用JavaScript的WebAPIs
     const element = document.querySelector("#app");
