@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>监听器</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+    <!--使用axios发送异步请求-->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <style>
+        .box {
+            height: 200px;
+            width: 200px;
+            border: black solid;
+        }
+
+        .btn {
+            height: 50px;
+            width: 100px;
+        }
+    </style>
+</head>
+
+<body>
+<div id="app">
+
+    <div>
+        <select v-model:value="obj.slang">
+            <option v-for="(item, index) in langs" v-bind:value="item.value">{{item.text}}</option>
+        </select>
+
+        <select v-model:value="obj.tlang">
+            <option v-for="(item, index) in langs" v-bind:value="item.value">{{item.text}}</option>
+        </select>
+        <br><br>
+
+        <textarea v-model:value="obj.text" cols="30" rows="10" placeholder="请输入待翻译的文字"></textarea>
+        <textarea v-bind:value="transText" cols="30" rows="10"></textarea>
+    </div>
+
+</div>
+
+
+<script>
+    // 这里本质上还是JavaScript，只是可以在Vue对象里面进行Vue相关的配置
+    const app = new Vue({
+        el: "#app",
+        data: {
+            langs: [
+                {value: 'en', text: "英语"},
+                {value: 'zh', text: "中文"},
+                {value: 'de', text: "德语"},
+            ],
+            obj: {
+                slang: 'en',
+                tlang: 'zh',
+                text: ''
+            },
+            transText: ''
+
+
+        },
+        methods: {},
+        // 监听对象发生改变时，触发handler函数
+        watch: {
+            obj: {
+                // 对对象中的每个属性字段都进行监听
+                deep: true,
+                handler(newValue) {
+                    // 每次修改先删除掉上一个延时任务
+                    clearTimeout(this.timerId);
+                    // 延时任务
+                    this.timerId = setTimeout(async () => {
+                        //发送Ajax请求,一般会被跨域拦截
+                        // let response = await axios({
+                        //     url: `http://www.baidu.com`,
+                        //     params: {}
+                        // });
+                        // console.log(response);
+
+                        // 模拟响应结果
+                        response = {
+                            data: '你好',
+                            code: 200
+                        }
+                        console.log(newValue);
+                    }, 300);
+
+                }
+            }
+        }
+    });
+
+
+    const element = document.querySelector("#app");
+
+</script>
+</body>
+</html>

@@ -79,6 +79,13 @@
         <button @click="reset()">重置</button>
     </div>
 
+    <!--计算属性使用示例-->
+    <div>
+        单价：<input type="text" v-model="price">
+        数量：<input type="text" v-model="count">
+        总计：<span>{{total}}</span>
+    </div>
+
 </div>
 
 
@@ -111,6 +118,9 @@
 
             username: null,
             password: null,
+
+            price: null,
+            count: null,
         },
         methods: {
             decr() {
@@ -136,6 +146,12 @@
             reset() {
                 this.username = '';
                 this.password = '';
+            }
+        },
+        computed: {
+            // 计算属性，声明和函数相同（添加括号），使用和属性相同（不添加括号）
+            total() {
+                return this.price * this.count;
             }
         }
     });
